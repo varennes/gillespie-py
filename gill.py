@@ -18,7 +18,7 @@ def get_mu(a,a0,r2):
         mu = 1
     return mu
 
-nEnsemble = 100
+nEnsemble = 5000
 
 dt = 0.1;
 tstop = 100;
@@ -64,56 +64,75 @@ for i in xrange(nEnsemble):
 # plt.show()
 
 # Ensemble average
-
 nt = int(tstop/dt);
-
 tMean = [i*dt for i in range(nt+1)];
-xMean = [0.0] * (nt+1);
-x2 = [];
-# x2.append([x0]*(nEnsemble))
+x = [];
 
 for i in xrange(nt):
     ti = (i+0.5)*dt;
     tf = (i+1.5)*dt;
 
-    x2.append([])
+    x.append([])
 
     for n in xrange(nEnsemble):
         for j in xrange(len(tEnsemble[n])):
             if (j*dt > ti) & (j*dt <= tf):
                 break
-        xMean[i+1] += xEnsemble[n][j]
 
-        x2[i].append( xEnsemble[n][j])
+        x[i].append( xEnsemble[n][j])
 
-xMean = [ xM/float(nEnsemble) for xM in xMean]
-xMean[0] = x0
-
-x3 = [];
-x4 = [];
-x5 = [];
-x6 = [];
-for i in range(len(x2)):
-    x3.append(np.mean(x2[i]))
-    x4.append(np.std(x2[i]))
-    x5.append(scipy.stats.skew(x2[i]))
+xMean = [];
+xStd = [];
+xSkew = [];
+for i in range(len(x)):
+    xMean.append(np.mean(x[i]))
+    xStd.append(np.std(x[i]))
+    # caclulate skewness
     s = []
-    s = [x-x3[i] for x in x2[i]]
-    s = [ (x/x4[i])**3.0 for x in s]
-    x6.append(np.mean(s))
+    s = [xi-xMean[i] for xi in x[i]]
+    s = [ (si/xStd[i])**3.0 for si in s]
+    xSkew.append(np.mean(s))
 
-x2.insert(0, x0)
-x3.insert(0, 0.0)
-x4.insert(0, 0.0)
-x5.insert(0, 0.0)
-x6.insert(0, 0.0)
+xMean.insert(0, x0)
+xStd.insert(0, 0.0)
+xSkew.insert(0, 0.0)
 
-plt.plot(tMean,xMean,label='xMean')
-plt.plot(tMean,x3,label='x3')
-plt.legend()
+xVar = [ std**2.0 for std in xStd]
+
+l = [ kb/kd for i in tMean]
+
+plt.plot(tMean,l, '--k', label='$\lambda$', linewidth=1.5)
+plt.plot(tMean,xMean,label='$\mu$')
+plt.plot(tMean,xVar,label='$\sigma^2$')
+plt.legend(loc=4)
+plt.title('Gillespie Simulation of Birth-Death Process')
+plt.xlabel('time')
+# plt.savefig('results1.png')
 plt.show()
 
-plt.plot(tMean,x5,label='scipy skew')
-plt.plot(tMean,x6,label='my skew')
-plt.legend()
+l = [ y**(-0.5) for y in l]
+
+plt.plot(tMean,l, '--k', label='$\lambda^{-1/2}$', linewidth=1.5)
+plt.plot(tMean,xSkew,label='$\gamma_1$')
+plt.title('Ensemble Skewness of Birth-Death Process')
+plt.xlabel('time')
+plt.legend(loc=4)
+# plt.savefig('results2.png')
 plt.show()
+
+plt.plot(tEnsemble[0],xEnsemble[0])
+plt.plot(tEnsemble[nEnsemble-1],xEnsemble[nEnsemble-1])
+plt.plot(tEnsemble[int(nEnsemble/4)],xEnsemble[int(nEnsemble/4)])
+plt.plot(tEnsemble[nEnsemble-int(nEnsemble/4)],xEnsemble[nEnsemble-int(nEnsemble/4)])
+plt.xlim([0,tstop])
+plt.title('Sample Trajectories')
+plt.xlabel('time')
+plt.ylabel('Population')
+# plt.savefig('results3.png')
+plt.show()
+
+print ' Final Ensemble values: '
+print ' '
+print '     Mean = %.3f' %xMean[len(xMean)-1]
+print ' Variance = %.3f' %xVar[len(xVar)-1]
+print ' Skewness = %.3f' %xSkew[len(xSkew)-1]
