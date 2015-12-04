@@ -23,3 +23,24 @@
 ## (ii) Birth-Death Process
 
 In a simple birth-death process there are two possible reactions. Birth: population goes up by one; death: population goes down by one. The state of the system is the population and so $\vec{x}(t) = x(t)$. The change of state vectors are $v_1 = +1, \ v_2 = -1$ and $a_1(x) = k_b, \ a_2(x) = k_dx$.
+
+## (iii) Ensemble Values
+
+Since the birth-death process is a Poisson process we know how the ensemble values should behave.
+
+$$
+\lambda(t) = \frac{k_b}{k_d}(1-e^{-k_dt})
+$$
+
+$$
+\mu = \lambda, \ \ \ \sigma^2 = \lambda, \\
+\gamma_1 = \text{E}\left[ \left(\frac{X-\mu}{\sigma}\right)^3 \right] = \lambda^{-1/2}
+$$
+
+The simulation results are in agreement with our theoretical predictions.
+
+![](results1.png)
+
+![](results2.png)
+
+## (iv) Probability Distribution
