@@ -29,7 +29,7 @@ In a simple birth-death process there are two possible reactions. Birth: populat
 Since the birth-death process is a Poisson process we know how the ensemble values should behave.
 
 $$
-\lambda(t) = \frac{k_b}{k_d}(1-e^{-k_dt})
+\lambda(t) = \frac{k_b}{k_d}+(x_0-k_b/k_d)e^{-k_dt}
 $$
 
 $$
@@ -44,3 +44,23 @@ The simulation results are in agreement with our theoretical predictions.
 ![](results2.png)
 
 ## (iv) Probability Distribution
+
+The probability density function for a birth-death process follows a Poisson distribution.
+
+$$
+P(x,t) = \frac{e^{-\lambda(t)}[\lambda(t)]^x}{x!}
+$$
+
+![](pdf1.png)
+![](pdf2.png)
+![](pdf3.png)
+![](pdf4.png)
+![](pdf5.png)
+
+## (v) Auto-Correlation Function
+
+
+
+## (vi) Time-averaging vs. Ensemble-averaging
+
+I did not need to modify my code since to calculate the time-average of a trajectory since my implementation already stores the time trajectory of each ensemble member. Once the simulation is complete we can pick an ensemble member and calculate the time average. Picking a random trajectory we see that the average population is approximately 20 which is equal to $k_b/k_d$ the ensemble average.

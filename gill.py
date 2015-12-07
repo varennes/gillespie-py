@@ -18,7 +18,12 @@ def get_mu(a,a0,r2):
         mu = 1
     return mu
 
-nEnsemble = 5000
+def probDensity(x,t,x0,kb,kd):
+    l = kb/kd + (x0-kb/kd)*np.exp(-kd*t)
+    p = np.exp(-l)*(l**x)/(np.math.factorial(x))
+    return p
+
+nEnsemble = 100
 
 dt = 0.1;
 tstop = 100;
@@ -99,37 +104,167 @@ xSkew.insert(0, 0.0)
 
 xVar = [ std**2.0 for std in xStd]
 
-l = [ kb/kd for i in tMean]
+l = [ (kb/kd + (x0-kb/kd)*np.exp(-kd*i)) for i in tMean]
 
-plt.plot(tMean,l, '--k', label='$\lambda$', linewidth=1.5)
-plt.plot(tMean,xMean,label='$\mu$')
-plt.plot(tMean,xVar,label='$\sigma^2$')
-plt.legend(loc=4)
-plt.title('Gillespie Simulation of Birth-Death Process')
-plt.xlabel('time')
-# plt.savefig('results1.png')
+
+
+#### PLOTS for part (iv) ####
+num_bins = int(5*kb/kd)
+
+# first time point
+tIndex = int( 0.10 * (len(tMean)-1));
+t = tMean[tIndex]
+pdf = [];
+for i in xrange(int(5*kb/kd)):
+    pdf.append( probDensity(i,t,x0,kb,kd))
+
+n, bins = np.histogram(x[tIndex], num_bins, [0,int(5*kb/kd)], normed=1)
+dbins = bins[1]-bins[0]
+n = n*dbins
+plt.bar( bins[0:len(bins)-1]-0.5, n, dbins, label='data', alpha=0.7)
+plt.plot(range(int(5*kb/kd)),pdf,'r',label="prediction",linewidth=1.5)
+plt.xlim([min(x[tIndex])-1,max(x[tIndex])+1])
+plt.legend()
+sTitle = 'Probability Distribution of the Birth Death Process, t=%.2f' %t
+plt.title(sTitle)
+plt.xlabel('Population')
+plt.ylabel('Probability Density')
+plt.savefig('pdf1.png')
 plt.show()
 
-l = [ y**(-0.5) for y in l]
+# second time point
+tIndex = int( 0.20 * (len(tMean)-1));
+t = tMean[tIndex]
+pdf = [];
+for i in xrange(int(5*kb/kd)):
+    pdf.append( probDensity(i,t,x0,kb,kd))
 
-plt.plot(tMean,l, '--k', label='$\lambda^{-1/2}$', linewidth=1.5)
-plt.plot(tMean,xSkew,label='$\gamma_1$')
-plt.title('Ensemble Skewness of Birth-Death Process')
-plt.xlabel('time')
-plt.legend(loc=4)
-# plt.savefig('results2.png')
+n, bins = np.histogram(x[tIndex], num_bins, [0,int(5*kb/kd)], normed=1)
+dbins = bins[1]-bins[0]
+n = n*dbins
+plt.bar( bins[0:len(bins)-1]-0.5, n, dbins, label='data', alpha=0.7)
+plt.plot(range(int(5*kb/kd)),pdf,'r',label="prediction",linewidth=1.5)
+plt.xlim([min(x[tIndex])-1,max(x[tIndex])+1])
+plt.legend()
+sTitle = 'Probability Distribution of the Birth Death Process, t=%.2f' %t
+plt.title(sTitle)
+plt.xlabel('Population')
+plt.ylabel('Probability Density')
+plt.savefig('pdf2.png')
 plt.show()
 
-plt.plot(tEnsemble[0],xEnsemble[0])
-plt.plot(tEnsemble[nEnsemble-1],xEnsemble[nEnsemble-1])
-plt.plot(tEnsemble[int(nEnsemble/4)],xEnsemble[int(nEnsemble/4)])
-plt.plot(tEnsemble[nEnsemble-int(nEnsemble/4)],xEnsemble[nEnsemble-int(nEnsemble/4)])
-plt.xlim([0,tstop])
-plt.title('Sample Trajectories')
-plt.xlabel('time')
-plt.ylabel('Population')
-# plt.savefig('results3.png')
+# third time point
+tIndex = int( 0.30 * (len(tMean)-1));
+t = tMean[tIndex]
+pdf = [];
+for i in xrange(int(5*kb/kd)):
+    pdf.append( probDensity(i,t,x0,kb,kd))
+
+n, bins = np.histogram(x[tIndex], num_bins, [0,int(5*kb/kd)], normed=1)
+dbins = bins[1]-bins[0]
+n = n*dbins
+plt.bar( bins[0:len(bins)-1]-0.5, n, dbins, label='data', alpha=0.7)
+plt.plot(range(int(5*kb/kd)),pdf,'r',label="prediction",linewidth=1.5)
+plt.xlim([min(x[tIndex])-1,max(x[tIndex])+1])
+plt.legend()
+sTitle = 'Probability Distribution of the Birth Death Process, t=%.2f' %t
+plt.title(sTitle)
+plt.xlabel('Population')
+plt.ylabel('Probability Density')
+plt.savefig('pdf3.png')
 plt.show()
+
+# fourth time point
+tIndex = int( 0.50 * (len(tMean)-1));
+t = tMean[tIndex]
+pdf = [];
+for i in xrange(int(5*kb/kd)):
+    pdf.append( probDensity(i,t,x0,kb,kd))
+
+n, bins = np.histogram(x[tIndex], num_bins, [0,int(5*kb/kd)], normed=1)
+dbins = bins[1]-bins[0]
+n = n*dbins
+plt.bar( bins[0:len(bins)-1]-0.5, n, dbins, label='data', alpha=0.7)
+plt.plot(range(int(5*kb/kd)),pdf,'r',label="prediction",linewidth=1.5)
+plt.xlim([min(x[tIndex])-1,max(x[tIndex])+1])
+plt.legend()
+sTitle = 'Probability Distribution of the Birth Death Process, t=%.2f' %t
+plt.title(sTitle)
+plt.xlabel('Population')
+plt.ylabel('Probability Density')
+plt.savefig('pdf4.png')
+plt.show()
+
+# fifth time point
+tIndex = len(tMean)-2;
+t = tMean[tIndex]
+pdf = [];
+for i in xrange(int(5*kb/kd)):
+    pdf.append( probDensity(i,t,x0,kb,kd))
+
+n, bins = np.histogram(x[tIndex], num_bins, [0,int(5*kb/kd)], normed=1)
+dbins = bins[1]-bins[0]
+n = n*dbins
+plt.bar( bins[0:len(bins)-1]-0.5, n, dbins, label='data', alpha=0.7)
+plt.plot(range(int(5*kb/kd)),pdf,'r',label="prediction",linewidth=1.5)
+plt.xlim([min(x[tIndex])-1,max(x[tIndex])+1])
+plt.legend()
+sTitle = 'Probability Distribution of the Birth Death Process, t=%.2f' %t
+plt.title(sTitle)
+plt.xlabel('Population')
+plt.ylabel('Probability Density')
+plt.savefig('pdf5.png')
+plt.show()
+#### PLOTS for part (iv) END ####
+
+
+
+# #### PLOTS for part (iii) ####
+# plt.plot(tMean,l, '--k', label='$\lambda$', linewidth=1.5)
+# plt.plot(tMean,xMean,label='$\mu$')
+# plt.plot(tMean,xVar,label='$\sigma^2$')
+# plt.legend(loc=4)
+# plt.title('Gillespie Simulation of Birth-Death Process')
+# plt.xlabel('time')
+# # plt.savefig('results1.png')
+# plt.show()
+#
+# l = [ y**(-0.5) for y in l]
+#
+# plt.plot(tMean,l, '--k', label='$\lambda^{-1/2}$', linewidth=1.5)
+# plt.plot(tMean,xSkew,label='$\gamma_1$')
+# plt.title('Ensemble Skewness of Birth-Death Process')
+# plt.xlabel('time')
+# plt.legend(loc=4)
+# # plt.savefig('results2.png')
+# plt.show()
+#
+# plt.plot(tEnsemble[0],xEnsemble[0])
+# plt.plot(tEnsemble[nEnsemble-1],xEnsemble[nEnsemble-1])
+# plt.plot(tEnsemble[int(nEnsemble/4)],xEnsemble[int(nEnsemble/4)])
+# plt.plot(tEnsemble[nEnsemble-int(nEnsemble/4)],xEnsemble[nEnsemble-int(nEnsemble/4)])
+# plt.xlim([0,tstop])
+# plt.title('Sample Trajectories')
+# plt.xlabel('time')
+# plt.ylabel('Population')
+# # plt.savefig('results3.png')
+# plt.show()
+# #### PLOTS for part (iii) END ####
+
+
+
+#### PLOTS for part (vi) ####
+b = [];
+for i in range(len(xEnsemble)):
+    b.append(np.mean(xEnsemble[i]))
+plt.hist(b);
+plt.xlabel('Time-averaged Population')
+plt.title('Histogram of Time-Averages of all Trajectories')
+plt.savefig('timeAverage.pdf')
+plt.show()
+#### PLOTS for part (vi) ####
+
+
 
 print ' Final Ensemble values: '
 print ' '
