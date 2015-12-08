@@ -63,4 +63,8 @@ $$
 
 ## (vi) Time-averaging vs. Ensemble-averaging
 
-I did not need to modify my code since to calculate the time-average of a trajectory since my implementation already stores the time trajectory of each ensemble member. Once the simulation is complete we can pick an ensemble member and calculate the time average. Picking a random trajectory we see that the average population is approximately 20 which is equal to $k_b/k_d$ the ensemble average.
+I did not need to modify my code since to calculate the time-average of a trajectory since my implementation already stores the time trajectory of each ensemble member. Once the simulation is complete we can pick an ensemble member and calculate the time average. Picking a random trajectory we see that the average population is approximately 20 which is equal to $k_b/k_d$, the ensemble average. As expected, the time-average is equal to the ensemble average.
+
+## (vii) First-Passage Time
+
+We can simulate the first-passage time by choosing some threshold population $x_T$ such that when a trajectory first reaches $x=x_T$ the time is recorded and that instance of the simulation is stopped.
