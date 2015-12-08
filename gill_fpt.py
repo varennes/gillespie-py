@@ -23,13 +23,13 @@ def probDensity(x,t,x0,kb,kd):
     p = np.exp(-l)*(l**x)/(np.math.factorial(x))
     return p
 
-nEnsemble = 100
+nEnsemble = 1000
 
-dt = 0.1;
-xstop = 25.0;
+dt = 0.05;
+xstop = 30.0;
 tstop = 1000;
 v = [ 1.0, -1.0]
-x0 = 10.0
+x0 = 0.0
 kb = 2.0
 kd = 0.1
 
@@ -70,8 +70,11 @@ n, bins = np.histogram(tEnsemble, num_bins, normed=1)
 dbins = bins[1]-bins[0]
 n = n*dbins
 plt.bar( bins[0:len(bins)-1]-0.5, n, dbins, label='data', alpha=0.7)
+sTitle = 'First-Passage Distribution, xStop=%.1f' %(xstop)
+plt.title(sTitle)
 plt.xlabel('First-Passage Time')
 plt.ylabel('Probability Density')
+plt.savefig('fpt1.png')
 plt.show()
 
 

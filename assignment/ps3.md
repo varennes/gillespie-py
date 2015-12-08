@@ -51,6 +51,8 @@ $$
 P(x,t) = \frac{e^{-\lambda(t)}[\lambda(t)]^x}{x!}
 $$
 
+We can find the distribution computationally by binning all ensemble member values at a specific point in time. The normalized bin values should then be equivalent to the probability distribution.
+
 ![](pdf1.png)
 ![](pdf2.png)
 ![](pdf3.png)
@@ -59,7 +61,19 @@ $$
 
 ## (v) Auto-Correlation Function
 
+For a birth-death process, the analytically predicted two-time auto-correlation function has the form
 
+$$ c_{x,x}(t,\tau) = \sigma^2(t)e^{-k_dt}.$$
+
+In the simulations, in order to calculate the auto-correlation function we will use this definition:
+
+$$ c_{x,x}(t,\tau) = < x(t+\tau)x(t) > - <x(t+\tau)><x(t)> .$$
+
+This does not require any major modification of the code since each ensemble trajectory is already stored in the list `xEnsemble`. So all we need to do to calculate $c_{x,x}(t,\tau)$ is to pick the times we are interested in and then average over all ensemble members at those times.
+
+![](autocorr.png)
+
+The predicted analytical result agrees very well with the simulations!
 
 ## (vi) Time-averaging vs. Ensemble-averaging
 
@@ -67,4 +81,14 @@ I did not need to modify my code since to calculate the time-average of a trajec
 
 ## (vii) First-Passage Time
 
-We can simulate the first-passage time by choosing some threshold population $x_T$ such that when a trajectory first reaches $x=x_T$ the time is recorded and that instance of the simulation is stopped.
+We can simulate the first-passage time by choosing some threshold population $\theta$ such that when a trajectory first reaches $x=\theta$ the time is recorded and that instance of the simulation is stopped.
+
+The predicted analytical first-passage time probability density is
+
+$$ \mathcal{P}_{\theta}(\tau) = - \frac{\partial}{\partial\tau} \left[ \sum_{x=0}^{\theta} \frac{e^{-\lambda(t)}[\lambda(t)]^x}{x!} \right]. $$
+
+This is a Gamma distribution of the form $\mathcal{P}_{\theta}(\tau) \sim \tau^a e^{-b\tau}$ with $a \propto 1/\theta$ and $b \propto k_d$.
+
+![](./fpt1.png)
+
+The simulated probability distribution is in agreement with prediction.

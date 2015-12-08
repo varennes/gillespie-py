@@ -95,6 +95,46 @@ l = [ (kb/kd + (x0-kb/kd)*np.exp(-kd*i)) for i in tEnsemble]
 
 
 
+#### for part (v) #####
+j1 = 100
+j2 = 1000
+jlist = [ j+1 for j in range(j1,j2)]
+
+cXX = [] # predicted Auto-Correlation function
+cAutoCorr = [] # Auto-Correlation from simulations
+tAutoCorr = []
+for j in jlist:
+    c1 = [];
+    c2 = [];
+    c3 = [];
+
+    t1 = tEnsemble[j1] # select times for Auto-Correlation function
+    t2 = tEnsemble[j]
+    tau = t2 - t1
+
+    cXX.append( xVar[j1]*np.exp(-kd*tau))
+
+    for n in xrange(nEnsemble):
+        c1.append(xEnsemble[n][j1]*xEnsemble[n][j])
+        c2.append(xEnsemble[n][j])
+        c3.append(xEnsemble[n][j1])
+
+    cAutoCorr.append(np.mean(c1) - np.mean(c2)*np.mean(c3))
+    tAutoCorr.append(t1+tau)
+
+
+plt.plot(tAutoCorr, cXX, '--k', label='Predicted', linewidth=1.5)
+plt.plot(tAutoCorr, cAutoCorr, label='Simulated')
+plt.legend(loc=1)
+plt.title('Auto-Correlation for Birth-Death Process')
+plt.xlabel('time')
+plt.ylabel('Auto-Correlation')
+plt.savefig('autocorr.png')
+plt.show()
+#### for part (v) END #####
+
+
+
 # #### PLOTS for part (iv) ####
 # num_bins = int(5*kb/kd)
 #
