@@ -22,7 +22,7 @@
 
 ## (ii) Birth-Death Process
 
-In a simple birth-death process there are two possible reactions. Birth: population goes up by one; death: population goes down by one. The state of the system is the population and so $\vec{x}(t) = x(t)$. The change of state vectors are $v_1 = +1, \ v_2 = -1$ and $a_1(x) = k_b, \ a_2(x) = k_dx$.
+In a simple birth-death process there are two possible reactions. Birth: population goes up by one; death: population goes down by one. The state of the system is the population and so $\vec{x}(t) = x(t)$. The change of state vectors are $v_1 = +1, \ v_2 = -1$ and $a_1(x) = k_b, \ a_2(x) = k_dx$. The source code is availible on [my github page](https://github.com/varennes/gillespie-py).
 
 ## (iii) Ensemble Values
 

@@ -246,37 +246,37 @@ plt.show()
 
 
 
-# #### PLOTS for part (iii) ####
-# plt.plot(tEnsemble,l, '--k', label='$\lambda$', linewidth=1.5)
-# plt.plot(tEnsemble,xMean,label='$\mu$')
-# plt.plot(tEnsemble,xVar,label='$\sigma^2$')
-# plt.legend(loc=4)
-# plt.title('Gillespie Simulation of Birth-Death Process')
-# plt.xlabel('time')
-# plt.savefig('results1.png')
-# plt.show()
-#
-# l = [ y**(-0.5) for y in l]
-#
-# plt.plot(tEnsemble,l, '--k', label='$\lambda^{-1/2}$', linewidth=1.5)
-# plt.plot(tEnsemble,xSkew,label='$\gamma_1$')
-# plt.title('Ensemble Skewness of Birth-Death Process')
-# plt.xlabel('time')
-# plt.legend(loc=1)
-# plt.savefig('results2.png')
-# plt.show()
-#
-# plt.plot(tEnsemble,xEnsemble[0])
-# plt.plot(tEnsemble,xEnsemble[nEnsemble-1])
-# plt.plot(tEnsemble,xEnsemble[int(nEnsemble/4)])
-# plt.plot(tEnsemble,xEnsemble[nEnsemble-int(nEnsemble/4)])
-# plt.xlim([0,tstop])
-# plt.title('Sample Trajectories')
-# plt.xlabel('time')
-# plt.ylabel('Population')
-# plt.savefig('results3.png')
-# plt.show()
-# #### PLOTS for part (iii) END ####
+#### PLOTS for part (iii) ####
+plt.plot(tEnsemble,l, '--k', label='$\lambda$', linewidth=1.5)
+plt.plot(tEnsemble,xMean,label='$\mu$')
+plt.plot(tEnsemble,xVar,label='$\sigma^2$')
+plt.legend(loc=4)
+plt.title('Gillespie Simulation of Birth-Death Process')
+plt.xlabel('time')
+plt.savefig('results1.png')
+plt.show()
+
+l = [ y**(-0.5) for y in l]
+
+plt.plot(tEnsemble,l, '--k', label='$\lambda^{-1/2}$', linewidth=1.5)
+plt.plot(tEnsemble,xSkew,label='$\gamma_1$')
+plt.title('Ensemble Skewness of Birth-Death Process')
+plt.xlabel('time')
+plt.legend(loc=1)
+plt.savefig('results2.png')
+plt.show()
+
+plt.plot(tEnsemble,xEnsemble[0])
+plt.plot(tEnsemble,xEnsemble[nEnsemble-1])
+plt.plot(tEnsemble,xEnsemble[int(nEnsemble/4)])
+plt.plot(tEnsemble,xEnsemble[nEnsemble-int(nEnsemble/4)])
+plt.xlim([0,tstop])
+plt.title('Sample Trajectories')
+plt.xlabel('time')
+plt.ylabel('Population')
+plt.savefig('results3.png')
+plt.show()
+#### PLOTS for part (iii) END ####
 
 
 
