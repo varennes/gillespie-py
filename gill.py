@@ -25,7 +25,7 @@ def probDensity(x,t,x0,kb,kd):
 nEnsemble = 1000
 
 dt = 0.05;
-tstop = 80;
+tstop = 100;
 v = [ 1.0, -1.0]
 x0 = 0.0
 kb = 2.0
@@ -123,7 +123,7 @@ for j in jlist:
     tAutoCorr.append(t1+tau)
 
 
-plt.plot(tAutoCorr, cXX, '--k', label='Predicted', linewidth=1.5)
+plt.plot(tAutoCorr, cXX, '--r', label='Predicted', linewidth=2.5)
 plt.plot(tAutoCorr, cAutoCorr, label='Simulated')
 plt.legend(loc=1)
 plt.title('Auto-Correlation for Birth-Death Process')
@@ -246,8 +246,8 @@ plt.show()
 
 
 
-#### PLOTS for part (iii) ####
-plt.plot(tEnsemble,l, '--k', label='$\lambda$', linewidth=1.5)
+# #### PLOTS for part (iii) ####
+plt.plot(tEnsemble,l, '--r', label='$\lambda$', linewidth=2.5)
 plt.plot(tEnsemble,xMean,label='$\mu$')
 plt.plot(tEnsemble,xVar,label='$\sigma^2$')
 plt.legend(loc=4)
@@ -258,38 +258,54 @@ plt.show()
 
 l = [ y**(-0.5) for y in l]
 
-plt.plot(tEnsemble,l, '--k', label='$\lambda^{-1/2}$', linewidth=1.5)
+plt.plot(tEnsemble,l, '--r', label='$\lambda^{-1/2}$', linewidth=2.5)
 plt.plot(tEnsemble,xSkew,label='$\gamma_1$')
 plt.title('Ensemble Skewness of Birth-Death Process')
 plt.xlabel('time')
 plt.legend(loc=1)
 plt.savefig('results2.png')
 plt.show()
+#
+# plt.plot(tEnsemble,xEnsemble[0])
+# plt.plot(tEnsemble,xEnsemble[nEnsemble-1])
+# plt.plot(tEnsemble,xEnsemble[int(nEnsemble/4)])
+# plt.plot(tEnsemble,xEnsemble[nEnsemble-int(nEnsemble/4)])
+# plt.xlim([0,tstop])
+# plt.title('Sample Trajectories')
+# plt.xlabel('time')
+# plt.ylabel('Population')
+# plt.savefig('results3.png')
+# plt.show()
+# #### PLOTS for part (iii) END ####
 
-plt.plot(tEnsemble,xEnsemble[0])
-plt.plot(tEnsemble,xEnsemble[nEnsemble-1])
-plt.plot(tEnsemble,xEnsemble[int(nEnsemble/4)])
-plt.plot(tEnsemble,xEnsemble[nEnsemble-int(nEnsemble/4)])
-plt.xlim([0,tstop])
-plt.title('Sample Trajectories')
-plt.xlabel('time')
-plt.ylabel('Population')
-plt.savefig('results3.png')
-plt.show()
-#### PLOTS for part (iii) END ####
 
 
-
-# #### PLOTS for part (vi) ####
-# b = [];
-# for i in range(len(xEnsemble)):
-#     b.append(np.mean(xEnsemble[i]))
-# plt.hist(b);
-# plt.xlabel('Time-averaged Population')
-# plt.title('Histogram of Time-Averages of all Trajectories')
+# #### part (vi) time averaging ####
+# xlist = [];
+# tlist = [];
+# tmin = 10/kd;
+# # find where to start time averaging
+# for i in range(len(tEnsemble)):
+#     if tmin <= tEnsemble[i]:
+#         break
+# # pick data points for averaging
+# n = int((1.0/kd)/dt);
+# for j in range(i,len(tEnsemble),n):
+#     tlist.append(tEnsemble[j])
+#     xlist.append(xEnsemble[0][j])
+#
+# tAverage = np.mean(xlist)
+# sTitle = 'Time-Averaging over a Single Trajectory, %.2f' %tAverage
+# plt.plot(tEnsemble,xEnsemble[0],label='Trajectory')
+# plt.plot(tlist,xlist,'ro',label='Sampled Points')
+# plt.title(sTitle)
+# plt.legend()
+# plt.xlabel('time')
+# plt.ylabel('population')
+# plt.xlim([min(tlist),max(tlist)])
 # plt.savefig('timeAverage.png')
 # plt.show()
-# #### PLOTS for part (vi) ####
+# #### part (vi) time averaging ####
 
 
 

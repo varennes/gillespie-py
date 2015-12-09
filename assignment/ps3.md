@@ -77,7 +77,11 @@ The predicted analytical result agrees very well with the simulations!
 
 ## (vi) Time-averaging vs. Ensemble-averaging
 
-I did not need to modify my code since to calculate the time-average of a trajectory since my implementation already stores the time trajectory of each ensemble member. Once the simulation is complete we can pick an ensemble member and calculate the time average. Picking a random trajectory we see that the average population is approximately 20 which is equal to $k_b/k_d$, the ensemble average. As expected, the time-average is equal to the ensemble average.
+In order to verify whether time-averaging is equal to ensemble-averaging the system needs to be in steady-state. As we have seen previously, steady-state is achieved for times much large than the characteristic time-scale $1/k_d$, where the ensemble average is $\lambda = k_b/k_d=20$. When time-averaging it is also important to ensure that the points on the trajectory are spaced far enough apart such that they are uncorrelated ($\Delta t>1/k_d$).
+
+![](timeAverage.png)
+
+We see that the simulated time average is very much in agreement with the ensemble average! In order to compute this the code had to modified in order to pick a single trajectory and sample its population at large time at every $\Delta t$ time steps. 
 
 ## (vii) First-Passage Time
 
